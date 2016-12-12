@@ -13,6 +13,11 @@ public class Responsable extends Personnel{
     private List<Material> materialLocalMaterial;
     private List<Material> materialMaintenance;
 
+    public Responsable(String firstName, String secondName, String cin) {
+        super(firstName, secondName, cin);
+        setMaterial();
+    }
+
     /*
         1 => Maintenance
         2 => Departement Informatique
@@ -22,6 +27,36 @@ public class Responsable extends Personnel{
 
      */
 
+    public void  emplacementMaterial(List<Material> material , String departement) {
+        for(int i = 0 ; i < material.size() ; i++){
+            if(material.get(i).aReparer()){
+                materialMaintenance.add(material.get(i)); // Ajout dans le maintenance
+                System.out.println("Il y'a un problem dans le materiel de la departement "+ departement);
+                System.out.println("Le material est : "+ material.get(i).getLibelle());
+                material.remove(i); // Suppression le données mel Local Existant
+            }
+        }
+    }
+
+    public void testMaterial (int place) {
+        switch(place) {
+            case 2:
+                emplacementMaterial(materialDepartementInformatique , Departement.CLASS_NAME); // TODO(1): Create Classe informatique
+                break;
+            case 3:
+                emplacementMaterial(materialDepartementMecanique , DepartementMecanique.CLASS_NAME);
+                break;
+            case 4:
+                emplacementMaterial(materialDepartementElectrique , DepartementElectrique.CLASS_NAME);
+                break;
+            default:
+                emplacementMaterial(materialLocalMaterial , LocalMaterial.CLASS_NAME);
+                break;
+        }
+    }
+
+
+
     public void mettreAJourMaterielMaintenance(){
         Material material;
         for (int i = 0; i < materialMaintenance.size(); i++) {
@@ -30,19 +65,54 @@ public class Responsable extends Personnel{
                 int place = material.getPlaceDelocal();
                 switch (place){
                     case 1:
-                        Maintenance.setMaterial();
+                        depotMateriel(materialMaintenance , material);
+                        break;
+                    case 2:
+                        depotMateriel(materialDepartementInformatique , material);
+                        //Departement Informatique
+                        break;
+                    case 3:
+                        // Departement Electrique
+                        depotMateriel(materialDepartementElectrique , material);
+                        break;
+                    case 4:
+                        // Deparement Electrique
+                        depotMateriel(materialDepartementMecanique, material);
+                        break;
+                    default:
+                        // Local Material
+                        depotMateriel(materialLocalMaterial, material);
+                        break;
                 }
             }
         }
     }
 
-    public void setMaterialMaintenance(){
-        this.materialMaintenance = Maintenance.getMaterial();
+    public void depotMateriel(List<Material> material, Material mat ){
+        material.add(mat);
     }
 
-    public void deoptDeMaterialAMaintenance(Material material){
-        materialMaintenance.add(material);
+    public void setMaterial(){
+        setMaterialDepartementElectrique();;
+        setMaterialDepartementMecanique();
+        setMaterialDepartementInformatique();
+        setMaterialLocalMaterial();
+        setMaterialMaintenance();
     }
+
+    public void setMaterialMaintenance(){
+        this.materialMaintenance = Maintenance.getMaintenanceMaterial();
+    }
+
+    public void setMaterialDepartementElectrique() { this.materialDepartementElectrique = DepartementElectrique.getDepartementElectriqueMaterial();}
+
+    public void setMaterialDepartementMecanique() {this.materialDepartementMecanique = DepartementMecanique.getDepartementMecaniqueMaterial();}
+
+    public void setMaterialDepartementInformatique() {this.materialDepartementInformatique = DepartementInformatique.getDepartementInformatiqueMaterial();}
+
+    public void setMaterialLocalMaterial() { this.materialLocalMaterial = LocalMaterial.getLocalMaterial() ;}
+
+
 
     public void ajoutDeReservation(Information information){
 
@@ -54,9 +124,7 @@ public class Responsable extends Personnel{
 
 
 
-    public Responsable(String firstName, String secondName, String cin) {
-        super(firstName, secondName, cin);
-    }
+
 
     @Override
     void reserver(Information information) {

@@ -7,7 +7,7 @@ public class Enseignant extends Adherant {
     }
 
     @Override
-    void reserver(Material m, String str, String motif) {
+    void reserver(Information information) {
 
     }
 }

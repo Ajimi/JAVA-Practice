@@ -6,13 +6,19 @@ import java.util.List;
 public  class DepartementElectrique extends Departement{
     public static final String CLASS_NAME = DepartementElectrique.class.getSimpleName(); // Nom de la class pour connaitre l'emplacement de material
 
+    private static List<Material> mat;
+
+    public static List<Material> getDepartementElectriqueMaterial() {
+        return mat;
+    }
+
     @Override
     public void placer(Material material) {
-        super.placer(material);
+
     }
 
     @Override
     public void setMaterial(List<Material> material) {
-        super.setMaterial(material);
+
     }
 }

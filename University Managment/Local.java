@@ -6,16 +6,18 @@ import java.util.List;
 public class  Local {
     public static final String CLASS_NAME = Local.class.getSimpleName(); // Nom de la class pour connaitre l'emplacement de material
 
-    private static List<Material> material;
+    private List<Material> material;
 
+    public List<Material> getMaterial() {
+        return material;
+    }
 
     public void placer(Material material){
         this.material.add(material);
     }
 
-    public static List<Material> getMaterial() {
-        return material;
-    }
+
+
     public void setMaterial(List<Material> material) {
         this.material = material;
     }

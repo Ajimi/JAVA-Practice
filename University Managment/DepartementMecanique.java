@@ -6,6 +6,11 @@ import java.util.List;
 public class DepartementMecanique extends Departement {
     public static final String CLASS_NAME = DepartementMecanique.class.getSimpleName(); // Nom de la class pour connaitre l'emplacement de material
 
+    private static List<Material> mat;
+    public static List<Material> getDepartementMecaniqueMaterial() {
+        return mat;
+    }
+
     @Override
     public void placer(Material material) {
         super.placer(material);
